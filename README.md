@@ -1,4 +1,4 @@
-Mini Project on Keras for Handwritten character recognition
+Mini Project on Keras for Handwritten Digits Recognition
 
 -Create CNN model on Keras
 -Download MNIST dataset
