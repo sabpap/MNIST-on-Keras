@@ -4,7 +4,7 @@
 Created on Sun Nov 19 19:33:49 2017
 
 1.Load trained model for character recognition
-2.Import new character images(created on paint) to test models resutlt
+2.Import new character images(created on paint) to test models results
 
 
 @author: sabpap
@@ -15,8 +15,10 @@ from keras.models import model_from_json
 import numpy as np
 from scipy.misc import imread, imresize
 from keras.datasets import mnist
-
+from TestDataCreation import load_images_from_folder # my script for new test set creation
+from imshow import imshow #custom made imshow function
 from keras import backend as K
+
 
 
 # load model 
@@ -36,7 +38,7 @@ loaded_model.compile(loss= keras.losses.categorical_crossentropy, optimizer=kera
 img_rows, img_cols = 28,28 #input images dimensions
 num_classes = 10 #10 different characters
 
-(x_train, y_train), (x_test, y_test) = mnist.load_data() #loading data
+(x_train, y_train), (x_test, y_test) = mnist.load_data() #loading MNIst data for evaluation
 
 
 #data preprocessing
@@ -57,36 +59,45 @@ print("%d test samples\n" % x_test.shape[0])
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 #evaluate on test data
-print("evaluating...")
+print("evaluating model...")
 score = loaded_model.evaluate(x_test, y_test, verbose=0)
-print("%s: %.2f%%\n" % (loaded_model.metrics_names[1], score[1]*100))
+print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1]*100))
+print('best CNN model acc: 99.79%\n')
 
 #testing/playing with new images
 
 #image 1
 one = imread('one.png',mode='L')
+one = np.invert(one) #inverting image
+one = imresize(one,(img_rows, img_cols)) #make it the right size
 #imshow(one)
-#one.astype('float32')
-#one /= 255
-one = np.invert(one)
-#make it the right size
-one = imresize(one,(img_rows, img_cols))
-#convert to a 4D tensor to feed into our model
-one = one.reshape(1,img_rows, img_cols,1)
+one = one.reshape(1,img_rows, img_cols,1) #convert to a 4D tensor to feed into our model
 
-x = loaded_model.predict_proba(one)
-x = x.astype(int)
+x = loaded_model.predict_proba(one) #Predict (probability)
+x = x.astype(int) #Convert to decision
 
 #image2
 four = imread('two.png',mode='L')
-#imshow(one)
-#one.astype('float32')
-#one /= 255
-four = np.invert(four)
-#make it the right size
-four = imresize(four,(img_rows, img_cols))
-#convert to a 4D tensor to feed into our model
-four = four.reshape(1,img_rows, img_cols,1)
+four = np.invert(four) #inverting image
+four = imresize(four,(img_rows, img_cols)) #make it the right size
+#imshow(four)
+four = four.reshape(1,img_rows, img_cols,1) #convert to a 4D tensor to feed into our model
 
-y = loaded_model.predict_proba(four)
-y = y.astype(int)
+y = loaded_model.predict_proba(four) #Predict (probability)
+y = y.astype(int) #Convert to decision
+
+
+#array of images
+folder = "NewTestSet"
+
+NewTest = load_images_from_folder(folder,(img_rows,img_cols)) #create new cystom test set
+
+z = loaded_model.predict_proba(NewTest) #Predict (probability)
+z = z.astype(int) #Convert to decisions
+
+#print predictions
+print('predictions for imported images:') 
+for row in z:
+    score = np.where(row == 1)
+    score = list(score)
+    print(int(score[0]))
