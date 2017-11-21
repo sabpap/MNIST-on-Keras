@@ -3,8 +3,17 @@
 """
 Created on Sun Nov 19 17:08:00 2017
 
--Goal :Implementation of handwritten character recognition deep network on Keras.
--Dataset : MnIST
+*Goal :Build CNN for handwritten digits recognition o Keras
+*Dataset : MnIST
+
+-Import Libraries
+-Load Dataset
+-Preprocess Data
+-Build Model
+-Compile Model
+-Train Model 
+-Save Model and Weights
+
 
 
 @author: sabpap
