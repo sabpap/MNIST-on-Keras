@@ -1,4 +1,6 @@
-## Mini Project on Keras for Handwritten Digits Recognition
+## MNIST-on-Keras
+ 
+Mini Project on Keras for Handwritten Digits Recognition
 
 ### Files included
 
