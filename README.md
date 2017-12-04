@@ -1,6 +1,6 @@
-# Mini Project on Keras for Handwritten Digits Recognition
+## Mini Project on Keras for Handwritten Digits Recognition
 
-## Files included
+### Files included
 
 -Build-Train_Model.py : script for creating and training cnn
 
