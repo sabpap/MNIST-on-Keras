@@ -1,8 +1,8 @@
-## MNIST-on-Keras
+# MNIST-on-Keras
  
 Mini Project on Keras for Handwritten Digits Recognition
 
-### Files included
+## Files included
 
 -Build-Train_Model.py : script for creating and training cnn
 
